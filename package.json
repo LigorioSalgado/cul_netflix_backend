@@ -1,0 +1,23 @@
+{
+  "name": "backend_netflix",
+  "version": "0.0.1",
+  "description": "Ejemplo de backend con graphql",
+  "main": "index.js",
+  "scripts": {
+    "start":"nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Edwin Salgado",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "graphql": "^14.0.2",
+    "graphql-yoga": "^1.16.7",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.3.12",
+    "nodemon": "^1.18.6"
+  }
+}
