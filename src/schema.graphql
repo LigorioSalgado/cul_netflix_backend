@@ -2,3 +2,28 @@
 type Query{
     prueba:String!
 }
+
+type Mutation{
+    signup(data:UserInput!):AuthToken
+}
+
+input UserInput {
+    first_name:String!,
+    last_name:String!,
+    email:String!,
+    password:String!,
+    birth_date:String,
+    gender:Gender,
+    nationality:String
+}
+
+enum Gender {
+    Male,
+    Female
+
+}
+
+type AuthToken {
+    token:String
+}
+
