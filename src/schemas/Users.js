@@ -72,8 +72,14 @@ UserSchema.pre('save',function(next){
                 next();
         })
     })
+});
 
+UserSchema.methods.comparePassword = function (candidate,cb) {
+    console.log(this.password)
+    bcrypt.compare(candidate,this.password,function(err,isMatch){
+        cb(err,isMatch)
+    })
 
-})
+}
 
 module.exports = mongoose.model('users',UserSchema);

@@ -4,7 +4,8 @@ type Query{
 }
 
 type Mutation{
-    signup(data:UserInput!):AuthToken
+    signup(data:UserInput!):AuthToken,
+    login(email:String!,password:String!):AuthToken
 }
 
 input UserInput {

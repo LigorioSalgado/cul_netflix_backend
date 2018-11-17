@@ -1,25 +1,27 @@
 const Users =  require('../schemas/Users');
-const jwt =  require('jsonwebtoken');
-
-const SECRET = "mysecret"
+const createToken  = require('../utils/createToken');
+const comparePasswords =  require('../utils/comparePasswords');
 
 
 function signup(_,args,context,info){
-
-
    return Users.create(args.data).then((user) => {
-
-        let payload =  {email:user.email}
-       let token = jwt.sign(payload,SECRET)
+       let token =  createToken(user)
        return {token}
-       
     }).catch((err) => {
         throw  new Error(err)
     })
 
+}
+
+
+function login(_,args,context,info){
+    return comparePasswords(args.email,args.password)
+        .then((token) => {return {token}})
+        .catch((err) => { throw err })
 
 }
 
 module.exports = {
-    signup
+    signup,
+    login
 }
