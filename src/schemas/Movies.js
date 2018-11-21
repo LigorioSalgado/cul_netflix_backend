@@ -1,5 +1,6 @@
 const mongoose =  require('mongoose');
 
+
 const Schema =  mongoose.Schema
 
 
@@ -12,7 +13,7 @@ const MovieSchema =  new Schema({
         },
         genre:{
             type:String,
-            enum:["action","scify","drama","comedy","horror"],
+            enum:["ACTION","SCIFY","DRAMA","COMEDY","HORROR"],
             required:true
         },
         director:{
@@ -69,5 +70,8 @@ const MovieSchema =  new Schema({
 
 },{'collection':'movies','timestamps':true});
 
+mongoose.Types.ObjectId.prototype.valueOf = function () {
+	return this.toString();
+};
 
 module.exports =  mongoose.model('movies',MovieSchema);
