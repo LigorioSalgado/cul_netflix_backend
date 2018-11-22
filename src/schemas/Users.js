@@ -1,5 +1,7 @@
 const mongoose =  require('mongoose');
 const bcrypt = require('bcrypt');
+const createSubscription =  require('../utils/createSubscription');
+const createCustomer =  require('../utils/createCustomer');
 
 const SALT_WORK_FACTOR = 10
 
@@ -64,9 +66,13 @@ UserSchema.pre('save',function(next){
     if(!user.isModified('password')){return next();}
     bcrypt.genSalt(SALT_WORK_FACTOR,function(err,salt){
         if(err) return next(err)
-        bcrypt.hash(user.password,salt,function(err,hash){
+        bcrypt.hash(user.password,salt,async function(err,hash){
                 if (err) return next(err);
                 user.password =  hash;
+                const {_id} =  await createSubscription()
+                user.subscription_id = _id
+                const {id} =  await createCustomer(user.email)
+                user.user_payment =  id
                 next();
         })
     })

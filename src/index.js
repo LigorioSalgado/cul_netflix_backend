@@ -21,9 +21,9 @@ const resolvers = {
 const server = new GraphQLServer({
     typeDefs:'./src/schema.graphql',
     resolvers,
-    context: context => ({
+    context: async context => ({
         ...context,
-        user:verifyToken(context)
+        user:await verifyToken(context)
     })
 })
 

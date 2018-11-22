@@ -1,5 +1,6 @@
 const Users =  require('../schemas/Users');
 const Movies = require('../schemas/Movies');
+const Subscriptions =  require('../schemas/Subscriptions')
 const createToken  = require('../utils/createToken');
 const comparePasswords =  require('../utils/comparePasswords');
 
@@ -54,10 +55,30 @@ function deleteMovie(_,args,context,info){
 }
 
 
+function upgradeSubscription(_,args,context,info){
+    if(!context.user) throw new Error("Authentication is required")
+    console.log(context.user)
+    const {subscription_id,user_payment} = context.user
+    console.log(subscription_id)
+    Subscriptions.findById(subscription_id).then((subscription) => {
+        subscription.upgrade(args.type,user_payment,(err,created) => {
+            if(err) throw err
+            if(created){
+                return "Subscription upgrade successfully"
+            }
+        })
+
+    })
+    
+
+}
+
+
 module.exports = {
     signup,
     login,
     createMovie,
     updateMovie,
-    deleteMovie
+    deleteMovie,
+    upgradeSubscription
 }

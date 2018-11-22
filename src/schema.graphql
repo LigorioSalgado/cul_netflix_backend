@@ -13,6 +13,13 @@ type Mutation{
     createMovie(data:MovieInput!):Movie
     updateMovie(id:String!,data:MovieUpdateInput!):Movie
     deleteMovie(id:String):String
+    upgradeSubscription(type:Subscriptions!):String
+}
+
+enum Subscriptions {
+    BASIC
+    GOLD
+    PREMIUM
 }
 
 
