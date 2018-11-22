@@ -23,6 +23,8 @@ function login(_,args,context,info){
 }
 
 function createMovie(_,args,context,info){
+    if(!context.user) throw new Error("Authentication is required")
+
     return Movies.create(args.data).then((movie) => {
         return movie.toObject()
     }).catch((err) => {throw err;})
@@ -30,6 +32,8 @@ function createMovie(_,args,context,info){
 }
 
 function updateMovie(_,args,context,info){
+    if(!context.user) throw new Error("Authentication is required")
+
     return Movies.findByIdAndUpdate(args.id,{$set:args.data},{new:true}).then((movie) => {
         return movie.toObject();
     }).catch((err) => {
@@ -38,6 +42,9 @@ function updateMovie(_,args,context,info){
 }
 
 function deleteMovie(_,args,context,info){
+    if(!context.user) throw new Error("Authentication is required")
+
+
     return Movies.findOneAndUpdate({_id:args.id},{$set:{is_active:false}})
         .then(() => {
             return "Movie deleted"

@@ -2,6 +2,7 @@ const {GraphQLServer}  = require('graphql-yoga')
 const Query  = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation')
 const mongoose =  require('mongoose');
+const verifyToken =  require('./utils/verifyToken');
 
 
 mongoose.connect('mongodb://prueba:prueba123@ds161856.mlab.com:61856/netflix-cul',{ useNewUrlParser: true } )
@@ -20,8 +21,9 @@ const resolvers = {
 const server = new GraphQLServer({
     typeDefs:'./src/schema.graphql',
     resolvers,
-    context: req => ({
-        ...req
+    context: context => ({
+        ...context,
+        user:verifyToken(context)
     })
 })
 

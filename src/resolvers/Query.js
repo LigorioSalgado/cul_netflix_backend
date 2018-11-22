@@ -5,6 +5,8 @@ function prueba(_,args,context,info){
 }
 
 function movies(_,args,context,info){
+    if(!context.user) throw new Error("Authentication is required")
+    
     return Movies.find({is_active:true}).then((movies) => {
         return movies;
     }).catch((err) => {
@@ -13,6 +15,8 @@ function movies(_,args,context,info){
 }
 
 function movie(_,args,context,info){
+    if(!context.user) throw new Error("Authentication is required")
+
     return Movies.findById(args.id).then((movie) => {
         return movie.toObject();
     }).catch((err) => {
