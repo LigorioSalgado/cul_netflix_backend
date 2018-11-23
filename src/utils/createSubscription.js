@@ -9,7 +9,7 @@ Date.prototype.addDays =  function(days){
 
 module.exports =  () => {
     const subscritpion = {
-        type_subscription:"basic",
+        type_subscription:"BASIC",
         price:"0",
         start_date:new Date(),
         end_date:new Date().addDays(30),

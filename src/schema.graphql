@@ -5,6 +5,7 @@ type Query{
     prueba:String!
     movies:[Movie!]!
     movie(id:ID):Movie
+    me:User
 }
 
 type Mutation{
@@ -14,6 +15,7 @@ type Mutation{
     updateMovie(id:String!,data:MovieUpdateInput!):Movie
     deleteMovie(id:String):String
     upgradeSubscription(type:Subscriptions!):String
+    addSource(source:String!):String
 }
 
 enum Subscriptions {
@@ -31,6 +33,30 @@ input UserInput {
     birth_date:String
     gender:Gender
     nationality:String
+}
+
+
+type User {
+    first_name:String
+    last_name:String
+    email:String
+    birth_date:String
+    gender:Gender
+    nationality:String
+    history:[Movie]
+    favorites:[Movie]
+    subscription_id:Subscription
+    is_active:Boolean,
+    user_payment:String
+}
+
+type Subscription {
+    type_subscription:Subscriptions
+    start_date:String
+    end_date:String
+    is_active:Boolean
+    price:String,
+    stripe_id:String
 }
 
 enum Gender {

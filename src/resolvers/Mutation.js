@@ -4,6 +4,8 @@ const Subscriptions =  require('../schemas/Subscriptions')
 const createToken  = require('../utils/createToken');
 const comparePasswords =  require('../utils/comparePasswords');
 const upgradeSub = require('../utils/upgradeSubscription');
+const {SECRET_KEY_STRIPE} =  require('../const');
+const stripe =  require('stripe')(SECRET_KEY_STRIPE)
 
 function signup(_,args,context,info){
    return Users.create(args.data).then((user) => {
@@ -68,11 +70,27 @@ function upgradeSubscription(_,args,context,info){
 }
 
 
+function addSource(_,args,context,info){
+    if(!context.user) throw new Error("Authentication is required")
+
+    const {user_payment} = context.user
+
+   stripe.customers.createSource(user_payment,{
+        source:args.source
+    },function(err,customer){
+        if(err) throw err;})
+    return "Source Added successfully"
+    
+
+}
+
+
 module.exports = {
     signup,
     login,
     createMovie,
     updateMovie,
     deleteMovie,
-    upgradeSubscription
+    upgradeSubscription,
+    addSource
 }
