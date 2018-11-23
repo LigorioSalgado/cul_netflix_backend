@@ -3,7 +3,7 @@ const Movies = require('../schemas/Movies');
 const Subscriptions =  require('../schemas/Subscriptions')
 const createToken  = require('../utils/createToken');
 const comparePasswords =  require('../utils/comparePasswords');
-
+const upgradeSub = require('../utils/upgradeSubscription');
 
 function signup(_,args,context,info){
    return Users.create(args.data).then((user) => {
@@ -57,18 +57,12 @@ function deleteMovie(_,args,context,info){
 
 function upgradeSubscription(_,args,context,info){
     if(!context.user) throw new Error("Authentication is required")
-    console.log(context.user)
     const {subscription_id,user_payment} = context.user
-    console.log(subscription_id)
-    Subscriptions.findById(subscription_id).then((subscription) => {
-        subscription.upgrade(args.type,user_payment,(err,created) => {
-            if(err) throw err
-            if(created){
-                return "Subscription upgrade successfully"
-            }
-        })
-
-    })
+    return Subscriptions.findById(subscription_id).then((subscription) => {
+        if(subscription.type_subscription == args.type) throw new Error("You can not upgrade the same subscription")
+        upgradeSub(subscription,user_payment,args.type)
+        return "Subscription Upgrade successfully"
+    }).catch((err) => { throw err})
     
 
 }
