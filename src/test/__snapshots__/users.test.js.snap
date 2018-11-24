@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register user works correctly Should create user correctly 1`] = `
+Object {
+  "data": Object {
+    "signup": Object {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjhkM2MxZTJjYmY3MTgyOTJhM2RlYiIsImVtYWlsIjoicHJ1ZWJhQGVtYWlsLmNvbSIsImZpcnN0X25hbWUiOiJQcnVlYmEiLCJpYXQiOjE1NDMwMzM3OTR9.Q9acEffi_wbQ7uS_XPWNcnIHCGm9lidEhZF8eL33Ifg",
+    },
+  },
+}
+`;
