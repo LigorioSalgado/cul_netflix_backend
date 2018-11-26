@@ -5,17 +5,19 @@ const mongoose =  require('mongoose');
 const verifyToken =  require('./utils/verifyToken');
 const { importSchema } = require('graphql-import')
 const { makeExecutableSchema } =  require('graphql-tools')
+const {MONGO_URI,TEST_MONGO_URI} = require('./const');
 
 const typeDefs = importSchema('./src/schema.graphql')
 
+const mongoUri = process.env.NODE_ENV === "test" ? TEST_MONGO_URI : MONGO_URI
 
-mongoose.connect('mongodb://prueba:prueba123@ds161856.mlab.com:61856/netflix-cul',{ useNewUrlParser: true } )
+mongoose.connect(mongoUri,{ useNewUrlParser: true } )
 
 const db = mongoose.connection
 
 db.on('error',
     (error) =>  console.log("Failed to connect to mongo",error))
-    .once('open', () => console.log("Connected to database"))
+    .once('open', () => console.log("Connected to database")) 
 
 const resolvers = {
     Query,
