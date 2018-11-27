@@ -1,9 +1,6 @@
 const mongoose =  require('mongoose');
 
 
-const { ObjectId } =  mongoose.Types;
-
-
 process.env.NODE_ENV = "test";
 
 const config = {

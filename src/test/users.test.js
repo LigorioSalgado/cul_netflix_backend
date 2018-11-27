@@ -2,6 +2,8 @@ const {graphql} =  require('graphql')
 
 const {schema} =  require('../index');
 
+const Users =  require('../schemas/Users');
+
 const setupTest = require('./helpers');
 
 const mutationRegister = `
@@ -18,6 +20,18 @@ const mutationRegister = `
     }
 `
 
+const queryMe = `
+
+    query Profile{
+        me{
+            first_name,
+            last_name,
+            email
+        }
+    }
+
+`
+
 describe("Register user works correctly", () => {
 
     beforeEach( async () => await setupTest())
@@ -32,8 +46,23 @@ describe("Register user works correctly", () => {
         const res = await graphql(schema,mutationRegister,null,{}
                                 ,{first_name,last_name,email,password})
     
-        expect(res).toMatchSnapshot();
+        //expect(res).toMatchSnapshot();
         expect(res).toHaveProperty("data")
+        expect(res.data).toHaveProperty("signup")
+        expect(res.data.signup).toHaveProperty("token")
+
+
+    })
+
+
+    it("Should retrieve me profile",async () => {
+
+        const me =  await Users.create({first_name:"prueba",last_name:"prueba",email:"prueba@prueba.com",password:"prueba"})
+
+        const res  =  await graphql(schema,queryMe,null,{user:me},{})
+        
+        expect(res).toMatchSnapshot()
+        expect(res.data.me.first_name).toBe(me.first_name)
 
     })
 
