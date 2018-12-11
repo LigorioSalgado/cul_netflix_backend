@@ -66,4 +66,8 @@ describe("Register user works correctly", () => {
 
     })
 
+    it(" 2 + 2 must be 4",() => {
+        expect(2+2).toBe(4)
+    })
+
 } )

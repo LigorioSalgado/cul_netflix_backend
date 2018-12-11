@@ -12,20 +12,6 @@
     "nodejs"
   ],
   "author": "Edwin Salgado",
-  "jest": {
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "/node_modules"
-    ],
-    "coverageReporters": [
-      "html",
-      "json",
-      "lcov"
-    ],
-    "moduleNameMapper": {
-      "^mongoose$": "<rootDir>/node_modules/mongoose"
-    }
-  },
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.2",
