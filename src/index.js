@@ -44,7 +44,7 @@ const options = {
     playground:'/playground',
     cors:{
         credentials:true,
-        origin:false
+        origin:["http://localhost:3000","https://mynetflix.netlify.com"]
     }
 
 
