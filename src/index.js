@@ -39,13 +39,16 @@ const server = new GraphQLServer({
 })
 
 const options = {
-    port: process.env.PORT || 8000,
-    endpoint: '/graphql',
-    playground: '/playground',
-    cors: {
-        origin: '*'
+    port:process.env.PORT || 8000,
+    endpoint:'/graphql',
+    playground:'/playground',
+    cors:{
+        credentials:true,
+        origin:["http://localhost:3000","https://mynetflix.netlify.com"]
     }
-};
+
+
+}
 
 server.start(options,
     ({port}) => console.log(`Magic start in port ${port}`))
